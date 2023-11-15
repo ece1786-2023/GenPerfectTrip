@@ -1,5 +1,5 @@
 from .hotel_data_processing import scrap_hotels_by_requirment
-
+import json
 
 def send_prompt(client, prompt):
     response = client.chat.completions.create(
@@ -21,20 +21,7 @@ def send_prompt(client, prompt):
     return output
 
 def send_prompt_for_hotels(requirement):
-    requirement = {
-        "destination": "University of Toronto",
-        "no_adults": "1",
-        "no_children": "0",
-        "no_rooms": "1",
-        "checkin": "2023-12-10",
-        "checkout": "2023-12-11",
-        #price: sort by price (low to high)
-        #class: sort by rating(high to low)
-        #class-acs: sort by rating(low to high)
-        "order": "price",
-        "price_range": "100-200",
-        #3000: less than 3km
-        "dis": "3000"
-    }
+    print(requirement)
+    requirement = json.loads(requirement)
     hotels = scrap_hotels_by_requirment(requirement)
     return hotels

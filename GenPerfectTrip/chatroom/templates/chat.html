@@ -100,7 +100,7 @@
              <form method="post">
                  {% csrf_token %}
                 <div class="form-floating">
-                    <textarea class="custom-input white-text" id="user_input" name="user_input" placeholder="Toronto" autofocus="autofocus" value={{raw_user_input}}></textarea>
+                    <textarea class="custom-input white-text" id="user_input" name="user_input" placeholder="Toronto" autofocus="autofocus" value={{raw_user_input}}>{{raw_user_input}}</textarea>
                 </div>
                 <div class="left-bottom-box">
                     <button type="submit" class="btn btn-success">generate</button>
