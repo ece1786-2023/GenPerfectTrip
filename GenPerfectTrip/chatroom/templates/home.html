@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block style %}
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+    }
+
+    .right-box {
+        height: 100vh;
+        background-color: #353541;
+        display: flex;
+        width: 40%;
+
+    }
+
+    .left-box {
+        height: 100vh;
+        background-color: #4D4D5E;
+        display: flex;
+        width: 60%;
+
+    }
+
+    .white_text {
+        color: aliceblue;
+    }
+
+    .mid {
+        align-items: center
+    }
+{% endblock %}
+{% block content %}
+<div class="right-box">
+        <div class="mb-3">
+            <label for="user_input" class="form-label white_text">
+                Please tell me where you want to go, and I will create
+                a plan
+                for
+                you</label>
+            <input type="text" class="form-control" id="user_input" placeholder="Toronto">
+            <button type="button" class="btn btn-success">generate</button>
+        </div>
+
+    </div>
+
+    <div class="left-box">
+        <input type="text" className="form-control" id="output" value={output}></input>
+    </div>
+{% endblock %}
