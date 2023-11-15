@@ -5,60 +5,113 @@
         padding: 0;
     }
 
-    body {
-        display: flex;
+
+    .left-box {
+        position: fixed;
+        height: 100vh;
+        background-color: #353541;
+        width: 35%;
+
     }
 
     .right-box {
-        height: 100vh;
-        background-color: #353541;
-        display: flex;
-        width: 40%;
+        position: absolute;
+        min-height: 100vh;
+        background-color: #434352;
+        width: 65%;
+        right: 0;
+        display: inline-block;
 
     }
 
-    .left-box {
-        height: 100vh;
-        background-color: #4D4D5E;
-        display: flex;
-        width: 60%;
-
-    }
-
-    .coloured-card{
-        background-color: #4D4D5E
-        display: flex;
-        width: 60%;
-    }
-
-    .white_text {
+    .white-text {
         color: aliceblue;
     }
 
-    .mid {
-        align-items: center
+    .left-mid-box {
+        position: relative;
+        top: 10%;
+        padding: 10px;
+        width: 100%;
+        height: 95%;
+
+    }
+
+    .left-top-box {
+        height: 100px;
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .custom-input {
+        width: 100%;
+        height: 250px;
+        background-color: #353541;
+        border: 1px solid #bababa;
+        outline: none;
+        resize: none;
+        border-radius: 5px
+    }
+
+    .custom-input:focus {
+        background-color: #353541;
+        border: 1px solid #5e9085;
+    }
+
+    .left-bottom-box {
+        margin-top: 25px;
+        text-align: center;
+    }
+
+    .custom-output {
+
+        width: 96%;
+        height: 100vh;
+        background-color: #434352;
+        outline: none;
+        border: none;
+        resize: none;
+        margin:50px 2% 0 2%
     }
 {% endblock %}
 {% block content %}
-<div class="right-box">
-        <div class="mb-3">
-            <label for="user_input" class="form-label white_text">
-                Please tell me where you want to go, and I will create
-                a plan
-                for
-                you</label>
-            <form method="post">
-                {% csrf_token %}
-                <input type="text" class="form-control" id="user_input" name = "user_input" placeholder="Toronto" autofocus="autofocus" value={{raw_user_input}}>
-                <button type="submit" class="btn btn-success">generate</button>
+
+<nav class="navbar fixed-top bg-body-tertiary bg-dark">
+    <div class="container-fluid" style="justify-content: center; align-items: center;">
+        <a style="font-size:22px;"><span style="color: red;">Gen</span><span
+                style="color: greenyellow;">Perfect</span><span style="color: rgb(94, 194, 234);">Trip</span>
+        </a>
+    </div>
+</nav>
+
+<div class="left-box">
+    <div class="left-mid-box">
+            <div class="left-top-box">
+                <div>
+                    <h4 class="white-text">
+                        Tell your futural trip;</h4>
+                </div>
+                <div>
+                    <h4 class="white-text">
+                        Get the perfect plan.</h4>
+                </div>
+            </div>
+             <form method="post">
+                 {% csrf_token %}
+                <div class="form-floating">
+                    <textarea class="custom-input white-text" id="user_input" name="user_input" placeholder="Toronto" autofocus="autofocus" value={{raw_user_input}}></textarea>
+                </div>
+                <div class="left-bottom-box">
+                    <button type="submit" class="btn btn-success">generate</button>
+                </div>
             </form>
         </div>
-
     </div>
 
-    <div class="left-box">
+    <div class="right-box">
     {% if outputs %}
-        <p>{{outputs}}</p>
+        <textarea class="custom-output white-text">{{outputs}}</textarea>
         {% else %}
         <p><p>
     {% endif %}
