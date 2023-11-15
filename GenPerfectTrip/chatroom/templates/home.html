@@ -25,6 +25,12 @@
 
     }
 
+    .coloured-card{
+        background-color: #4D4D5E
+        display: flex;
+        width: 60%;
+    }
+
     .white_text {
         color: aliceblue;
     }
@@ -41,13 +47,20 @@
                 a plan
                 for
                 you</label>
-            <input type="text" class="form-control" id="user_input" placeholder="Toronto">
-            <button type="button" class="btn btn-success">generate</button>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" id="user_input" name = "user_input" placeholder="Toronto" autofocus="autofocus" value={{raw_user_input}}>
+                <button type="submit" class="btn btn-success">generate</button>
+            </form>
         </div>
 
     </div>
 
     <div class="left-box">
-        <input type="text" className="form-control" id="output" value={output}></input>
+    {% if hotels %}
+        <p>{{hotels}}</p>
+        {% else %}
+        <p>No hotel found<p>
+    {% endif %}
     </div>
 {% endblock %}

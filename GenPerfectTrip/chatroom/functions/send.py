@@ -21,7 +21,7 @@ from .hotel_data_processing import scrap_hotels_by_requirment
 #     print(output)
 #     return output
 
-def send_prompt():
+def send_prompt(requirement):
     requirement = {
         "destination": "University of Toronto",
         "no_adults": "1",
