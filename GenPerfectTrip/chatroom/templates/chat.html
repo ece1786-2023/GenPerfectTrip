@@ -65,7 +65,7 @@
 
     .custom-output {
         width: 98%;
-        height: 40vh;
+        height: 60vh;
         background-color: #31313c;
         outline: none;
         border: none;
@@ -137,10 +137,3 @@
     {% endif %}
     </div>
 {% endblock %}
-
-    {% block script %}
-    document.addEventListener('DOMContentLoaded', function() {
-        const textarea = document.getElementById('user_input');
-        textarea.value = ''; // Clear the textarea content
-    });
-    {% endblock %}
