@@ -63,7 +63,11 @@ def get_hotel_info(url):
     hotel_list = soup.findAll("div", {'data-testid': 'property-card'})
 
     hotels_data = []
+    count = 0
     for hotel in hotel_list:
+        count += 1
+        if count > 8:
+            break
         # Extract the hotel name
         name_element = hotel.find('div', {'data-testid': 'title'})
         name = None
