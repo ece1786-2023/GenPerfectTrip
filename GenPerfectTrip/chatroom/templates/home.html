@@ -120,7 +120,7 @@
              <form method="post">
                  {% csrf_token %}
                 <div class="form-floating">
-                    <textarea class="custom-input white-text" id="user_input" name="user_input" autofocus="autofocus" value={{raw_user_input}}>{{raw_user_input}}</textarea>
+                    {{ form.as_p }}
                 </div>
                 <div class="left-bottom-box">
                     <button type="submit" class="btn btn-success">generate</button>
@@ -130,10 +130,6 @@
     </div>
 
     <div class="right-box">
-    {% if outputs %}
-        <textarea class="custom-output white-text">{{outputs}}</textarea>
-        {% else %}
-        <p><p>
-    {% endif %}
+    <textarea class="custom-output white-text">{{outputs}}</textarea>
     </div>
 {% endblock %}

@@ -1,16 +1,27 @@
 from django.shortcuts import render
 from openai import OpenAI
-from.functions.prompt_constructor import construct_sys_prompt_for_plan
+
+from .functions.InputForm import UserInputForm
+from .functions.prompt_constructor import construct_sys_prompt_for_plan
 from .functions.send import send_prompt_for_hotels, send_prompt
 
 
 def hotels(request):
+    context = {
+        "outputs": "",
+        "form": UserInputForm()
+    }
     if request.method == 'POST':
-        user_input = request.POST.get('user_input')
-        hotels = send_prompt_for_hotels(user_input)
-        return render(request, template_name="home.html", context={"outputs": hotels, "raw_user_input": user_input})
-    return render(request, template_name="home.html")
+        form = UserInputForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['user_input']
+            output = send_prompt_for_hotels(content)
+            context = {
+                "outputs": output,
+                "form": form
+            }
 
+    return render(request, template_name='home.html', context=context)
 def index(request):
     if request.method == 'POST':
         client = OpenAI()
@@ -23,3 +34,23 @@ def index(request):
         
         return render(request, template_name="chat.html", context={"outputs": completion, "raw_user_input": user_input})
     return render(request, template_name="chat.html")
+
+
+def test(request):
+    context = {
+        "outputs": "",
+        "form": UserInputForm()
+    }
+    if request.method == 'POST':
+        form = UserInputForm(request.POST)
+        if form.is_valid():
+            print(form)
+            content = form.cleaned_data['user_input']
+            print(content)
+            output = "hello" + content
+            context = {
+                "outputs": output,
+                "form": form
+            }
+
+    return render(request, template_name='home.html', context=context)
