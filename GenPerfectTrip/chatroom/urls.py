@@ -5,4 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("hotels", views.hotels, name="hotels"),
     path("test", views.test, name="test"),
+    path('generate', views.generate, name='generate')
 ]
