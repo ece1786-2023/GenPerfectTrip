@@ -22,7 +22,7 @@ def generate(request):
     user_input = request.GET.get("user_input")
 
     sys_prompt_1 = construct_sys_prompt_for_hotels()
-    req = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=300)
+    req = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=200)
     hotels = get_hotels_by_req(req)
     sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
     output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
@@ -77,7 +77,7 @@ def hotels(request):
 
 def hotels_generate(request):
     user_input = request.GET.get("user_input")
-    output = send_prompt_for_hotels(user_input)
+    output = get_hotels_by_req(user_input)
     print(output)
     return JsonResponse({'data': output})
 

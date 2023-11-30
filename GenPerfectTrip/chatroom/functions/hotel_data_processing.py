@@ -10,13 +10,13 @@ def scrap_hotels_by_requirment(requirements):
 def form_url(requirement):
     BOOK_URL = "https://www.booking.com/searchresults.en-gb.html?"
     url = BOOK_URL
-
+    number_of_night = int(requirement.get("number_of_nights"))
     destination = requirement.get("destination")
     group_adults = requirement.get("no_adults", 1)
     group_children = requirement.get("no_children", 0)
     no_rooms = requirement.get("no_rooms", 1)
-    check_in = requirement.get("checkin", str(datetime.date.today()))
-    check_out = requirement.get("checkout", str(datetime.date.today() + datetime.timedelta(days=1)))
+    check_in = requirement.get("checkin", str(datetime.date.today()+ datetime.timedelta(days=1)))
+    check_out = requirement.get("checkout", str(datetime.date.today() + datetime.timedelta(days=number_of_night+1)))
     order = requirement.get("order")
     price_range = requirement.get("price_range")
     distance = requirement.get("dis")
@@ -45,7 +45,7 @@ def get_hotel_info(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
         "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "*",
         'Accept-Language': 'en-US, en;q=0.5',
         "Connection": "keep-alive"
     }
@@ -53,6 +53,7 @@ def get_hotel_info(url):
     text = None
     if response.status_code == 200:
         text = response.text
+
     else:
         print(f"Failed to retrieve the page. Status code: {response.status_code}")
         return

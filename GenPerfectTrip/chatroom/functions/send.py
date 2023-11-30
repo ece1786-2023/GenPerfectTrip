@@ -25,8 +25,9 @@ def send_prompt(client, system_prompt, prompt, t, max_tokens):
     return output
 
 def get_hotels_by_req(requirement):
-    print(requirement)
     requirement = json.loads(requirement)
+    print("json",requirement)
     hotels = scrap_hotels_by_requirment(requirement)
+    print("hotel", hotels)
     return hotels
 
