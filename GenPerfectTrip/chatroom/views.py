@@ -2,7 +2,7 @@ from django.shortcuts import render
 from openai import OpenAI
 from .static.test import OUTPUT
 from .functions.prompt_constructor import construct_sys_prompt_for_plan, construct_sys_prompt_for_hotels
-from .functions.send import send_prompt_for_hotels, send_prompt
+from .functions.send import get_hotels_by_req, send_prompt
 from django.http import JsonResponse
 
 
@@ -23,7 +23,7 @@ def generate(request):
 
     sys_prompt_1 = construct_sys_prompt_for_hotels()
     req = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=300)
-    hotels = send_prompt_for_hotels(req)
+    hotels = get_hotels_by_req(req)
     sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
     output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
     return JsonResponse({'data': output})
