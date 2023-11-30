@@ -3,3 +3,7 @@ def construct_sys_prompt_for_plan(user_input, hotel_info):
 
     return sys_prompt
 
+def construct_sys_prompt_for_hotels():
+    sys_prompt =""
+    return sys_prompt
+
