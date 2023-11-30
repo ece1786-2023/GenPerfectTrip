@@ -20,19 +20,32 @@
                         Get the perfect plan.</h4>
                 </div>
             </div>
-            <form method="post">
+            <form method="get">
                 {% csrf_token %}
                 <div class="form-floating">
                      <textarea class="custom-input white-text" id="user_input" name="user_input" autofocus="autofocus" required></textarea>·
                 </div>
                 <div class="left-bottom-box">
-                    <button class="btn btn-success" id="generate">generate</button>
+                    <button class="btn btn-outline-success" id="hotels-generate">generate plan</button>
+                </div>
+                <div class="left-bottom-box">
+                    <button class="btn btn-outline-info d-n" id="hotels-improve">improve plan</button>
+                </div>
+
+                <div class="left-bottom-box">
+                    <div class="loading-box d-n" id="loading-box">
+                        <div class="colorful"></div>
+                        <div class="white-text" style="margin-top: 30px" >We are generating your plan, please wait...</div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="right-box">
-    <textarea class="custom-output white-text" id="output"></textarea>
+        <textarea class="white-text custom-output d-n" id="output">
+        </textarea>
+        <textarea class="custom-output d-n white-text" id="new_output">
+        </textarea>
     </div>
 {% endblock %}

@@ -29,3 +29,4 @@ def send_prompt_for_hotels(requirement):
     requirement = json.loads(requirement)
     hotels = scrap_hotels_by_requirment(requirement)
     return hotels
+

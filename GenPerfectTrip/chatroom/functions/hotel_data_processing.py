@@ -114,8 +114,8 @@ def main():
         "no_adults": "1",
         "no_children": "0",
         "no_rooms": "1",
-        "checkin": "2023-12-10",
-        "checkout": "2023-12-11",
+        # "checkin": "2023-12-10",
+        # "checkout": "2023-12-11",
         #price: sort by price (low to high)
         #class: sort by rating(high to low)
         #class-acs: sort by rating(low to high)
