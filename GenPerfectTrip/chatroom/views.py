@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from openai import OpenAI
-from .static.test import OUTPUT
 from .functions.prompt_constructor import construct_sys_prompt_for_plan, construct_sys_prompt_for_hotels,construct_sys_prompt_for_improvement
 from .functions.send import get_hotels_by_req, send_prompt
 from django.http import JsonResponse
@@ -32,6 +31,8 @@ def improve(request):
     client = OpenAI()
     user_input = request.GET.get("user_input")
     sys_prompt_1 = construct_sys_prompt_for_improvement()
+    original_plan = request.GET.get("original_plan")
+    print("original_plan", original_plan)
     # two cases here for hotel or activity improvement
     # hotel improvement needs to go through web-scraping and plan generation
     # activity improvement can directly output improved plan
@@ -55,14 +56,15 @@ def test(request):
 
 def test_generate(request):
     user_input = request.GET.get("user_input")
-    output = user_input+OUTPUT
+    output = user_input
     print(output)
     return JsonResponse({'data': output})
 
 
 def test_improve(request):
     user_input = request.GET.get("user_input")
-    output = "improve"+user_input+OUTPUT
+    original_plan = request.GET.get("original_plan")
+    output = "improve"+user_input+original_plan
     print(output)
     return JsonResponse({'data': output})
 

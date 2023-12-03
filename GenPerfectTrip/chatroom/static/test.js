@@ -26,14 +26,15 @@ $(document).ready(function() {
         event.preventDefault()
         $("#loading-box").fadeIn()
         var textareaValue = $("#user_input").val();
+        var original_plan = $("#output").val();
         $.ajax({
             url: "test_improve",
             type: "GET",
             data: {
-                user_input: textareaValue
+                user_input: textareaValue,
+                original_plan: original_plan
             },
             success: function(response) {
-                console.log(response.data)
                 $("#new_output").text(response.data);
                 $("#new_output").fadeIn()
                 $("#loading-box").fadeOut()
