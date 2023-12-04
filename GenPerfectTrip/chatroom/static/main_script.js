@@ -40,6 +40,7 @@ $(document).ready(function() {
                 $("#new_output").text(response.data);
                 $("#new_output").fadeIn()
                 $("#loading-box").fadeOut()
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
             }
         });
     });

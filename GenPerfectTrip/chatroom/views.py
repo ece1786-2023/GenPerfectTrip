@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from openai import OpenAI
-from .functions.prompt_constructor import construct_sys_prompt_for_plan, construct_sys_prompt_for_hotels,construct_sys_prompt_for_improvement
+from .functions.prompt_constructor import construct_sys_prompt_for_plan, construct_sys_prompt_for_hotels,construct_sys_prompt_for_improvement,construct_sys_prompt_for_hotel_improvement
 from .functions.send import get_hotels_by_req, send_prompt
 from django.http import JsonResponse
 
@@ -40,7 +40,8 @@ def improve(request):
     print(check)
     if len(check) < 200:
         hotels = get_hotels_by_req(check)
-        sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
+        sys_prompt_2 = construct_sys_prompt_for_hotel_improvement(hotels, original_plan)
+        print(sys_prompt_2)
         output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
     else:
         output = check
