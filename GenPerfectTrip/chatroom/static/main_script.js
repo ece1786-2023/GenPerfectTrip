@@ -18,6 +18,7 @@ $(document).ready(function() {
                 $("#improve").fadeIn()
                 $("#output").fadeIn()
                 $("#loading-box").fadeOut()
+                $("html, body").animate({ scrollTop: 0}, 1000);
             }
         });
     });

@@ -17,38 +17,44 @@ def chat(request):
     return render(request, template_name='chat.html', context=context)
 
 def generate(request):
-    client = OpenAI()
-    user_input = request.GET.get("user_input")
+    try:
+        client = OpenAI()
+        user_input = request.GET.get("user_input")
+        sys_prompt_1 = construct_sys_prompt_for_hotels()
+        req = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=200)
+        hotels = get_hotels_by_req(req)
+        sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
+        output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
+        return JsonResponse({'data': output})
+    except:
+        output = "We are not able to generate the plan based on your input, please be more specific."
+        return JsonResponse({'data': output})
 
-    sys_prompt_1 = construct_sys_prompt_for_hotels()
-    req = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=200)
-    hotels = get_hotels_by_req(req)
-    sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
-    output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
-    return JsonResponse({'data': output})
+
 
 def improve(request):
-    client = OpenAI()
-    user_input = request.POST.get("user_input")
-    original_plan = request.POST.get("original_plan")
-    print("original_plan---->", original_plan)
-    sys_prompt_1 = construct_sys_prompt_for_improvement(original_plan)
-    # two cases here for hotel or activity improvement
-    # hotel improvement needs to go through web-scraping and plan generation
-    # activity improvement can directly output improved plan
-    check = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=1500)
-    print(check)
-    if len(check) < 200:
-        hotels = get_hotels_by_req(check)
-        sys_prompt_2 = construct_sys_prompt_for_hotel_improvement(hotels, original_plan)
-        print(sys_prompt_2)
-        output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
-    else:
-        output = check
-
-
-
-    return JsonResponse({'data': output})
+    try:
+        client = OpenAI()
+        user_input = request.POST.get("user_input")
+        original_plan = request.POST.get("original_plan")
+        print("original_plan---->", original_plan)
+        sys_prompt_1 = construct_sys_prompt_for_improvement(original_plan)
+        # two cases here for hotel or activity improvement
+        # hotel improvement needs to go through web-scraping and plan generation
+        # activity improvement can directly output improved plan
+        check = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=1500)
+        print(check)
+        if len(check) < 200:
+            hotels = get_hotels_by_req(check)
+            sys_prompt_2 = construct_sys_prompt_for_hotel_improvement(hotels, original_plan)
+            print(sys_prompt_2)
+            output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
+        else:
+            output = check
+            return JsonResponse({'data': output})
+    except:
+        output = "We are not able to improve the plan based on your input, please be more specific."
+        return JsonResponse({'data': output})
 
 
 def test(request):
