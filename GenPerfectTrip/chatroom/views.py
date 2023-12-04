@@ -30,15 +30,23 @@ def generate(request):
 def improve(request):
     client = OpenAI()
     user_input = request.GET.get("user_input")
-    sys_prompt_1 = construct_sys_prompt_for_improvement()
     original_plan = request.GET.get("original_plan")
-    print("original_plan", original_plan)
+    print("original_plan---->", original_plan)
+    sys_prompt_1 = construct_sys_prompt_for_improvement(original_plan)
     # two cases here for hotel or activity improvement
     # hotel improvement needs to go through web-scraping and plan generation
     # activity improvement can directly output improved plan
-    hotel_info = ""
-    sys_prompt = ""
-    output = send_prompt(client, sys_prompt, user_input, t=0.5, max_tokens=10)
+    check = send_prompt(client, sys_prompt_1, user_input, t=1, max_tokens=1500)
+    print(check)
+    if len(check) < 200:
+        hotels = get_hotels_by_req(check)
+        sys_prompt_2 = construct_sys_prompt_for_plan(user_input, hotels)
+        output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
+    else:
+        output = check
+
+
+
     return JsonResponse({'data': output})
 
 
