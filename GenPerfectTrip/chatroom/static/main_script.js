@@ -28,10 +28,13 @@ $(document).ready(function() {
         var original_plan = $("#output").val();
         $.ajax({
             url: "improve",
-            type: "GET",
+            type: "POST",
             data: {
                 user_input: textareaValue,
                 original_plan: original_plan
+            },
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
             },
             success: function(response) {
                 $("#new_output").text(response.data);
@@ -40,4 +43,20 @@ $(document).ready(function() {
             }
         });
     });
+    // Function to get the CSRF token from cookies
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Search for the CSRF cookie by name
+                if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 });

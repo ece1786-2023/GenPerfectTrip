@@ -29,8 +29,8 @@ def generate(request):
 
 def improve(request):
     client = OpenAI()
-    user_input = request.GET.get("user_input")
-    original_plan = request.GET.get("original_plan")
+    user_input = request.POST.get("user_input")
+    original_plan = request.POST.get("original_plan")
     print("original_plan---->", original_plan)
     sys_prompt_1 = construct_sys_prompt_for_improvement(original_plan)
     # two cases here for hotel or activity improvement
