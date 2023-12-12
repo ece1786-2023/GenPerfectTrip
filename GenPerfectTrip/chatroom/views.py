@@ -49,6 +49,7 @@ def improve(request):
             sys_prompt_2 = construct_sys_prompt_for_hotel_improvement(hotels, original_plan)
             print(sys_prompt_2)
             output = send_prompt(client, sys_prompt_2, user_input, t=0.5, max_tokens=1500)
+            return JsonResponse({'data': output})
         else:
             output = check
             return JsonResponse({'data': output})

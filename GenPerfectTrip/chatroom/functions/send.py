@@ -1,4 +1,4 @@
-from .hotel_data_processing import scrap_hotels_by_requirment
+from .data_processor import scrap_hotels_by_requirment
 import json
 
 def send_prompt(client, system_prompt, prompt, t, max_tokens):
